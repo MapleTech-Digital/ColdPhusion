@@ -13,7 +13,7 @@ if(!$matched_route) {
     die();
 }
 
-
+// @todo Can automate this with a glob to the controller directory, so the user doesn't need to sit here and do this for ever new controller authored
 require_once __DIR__ . '/../src/App/Controllers/HomeController.php';
 require_once __DIR__ . '/../src/App/Controllers/PostController.php';
 
