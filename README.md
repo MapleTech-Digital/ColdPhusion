@@ -1,12 +1,18 @@
-# Phlog
-A new blog platform built in the open on my youtube channel: https://www.youtube.com/playlist?list=PLdznITFHfqmO9NzsTW8EKj54aKea4fxpv
+# ColdPhusion
+A forum platform for the CodeNucleus Community, running on a custom PHP framework
 
 # Run it
-At the moment, we are still using PHP's built in webserver.
 
+### PHP Built in Server
 ```
 php -S localhost:8000 -t ./public .\public\index.php
 ```
+
+### Apache
+
+### Nginx
+
+### Docker
 
 # Screenshots
 

@@ -15,14 +15,10 @@ $config = [
 
     // Logging Module
     'logging' => [
-        'outdir' => __DIR__ . '/logs',
-        'channels' => [
-            'main' => [
-                'min_level' => 'info',
-            ]
-        ]
+        'name' => 'app',
+        'outdir' => __DIR__ . '/var/logs',
+        'minlevel' => 'info',
     ]
-
 ];
 
 return $config;
