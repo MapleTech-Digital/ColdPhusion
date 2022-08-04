@@ -12,6 +12,10 @@ $routes = [
     'about' => [
         'route' => '/about',
         'controller' => 'App\Controllers\HomeController::about'
+    ],
+    'security_login' => [
+        'route' => '/security/login',
+        'controller' => 'App\Controllers\SecurityController::login'
     ]
 ];
 

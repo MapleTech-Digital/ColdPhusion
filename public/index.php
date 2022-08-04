@@ -16,6 +16,7 @@ if(!$matched_route) {
 // @todo Can automate this with a glob to the controller directory, so the user doesn't need to sit here and do this for ever new controller authored
 require_once __DIR__ . '/../src/App/Controllers/HomeController.php';
 require_once __DIR__ . '/../src/App/Controllers/PostController.php';
+require_once __DIR__ . '/../src/App/Controllers/SecurityController.php';
 
 $controller = new $matched_route['controller']();
 $response = call_user_func_array([$controller, $matched_route['action']], $matched_route['parameters']);
