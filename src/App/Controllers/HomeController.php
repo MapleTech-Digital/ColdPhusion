@@ -12,7 +12,8 @@ class HomeController extends BaseController
         $posts = Repositories\PostRepository::getPosts();
 
         return $this->render('home', [
-            'posts' => $posts
+            'posts' => $posts,
+            'name' => 'Kyle',
         ]);
     }
 

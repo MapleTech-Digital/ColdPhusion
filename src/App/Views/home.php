@@ -1,4 +1,12 @@
-<?php require_once __DIR__ . '/_header.php'; ?>
+<?php $this->layout('_base', ['page_title' => 'Blog Roll']); ?>
+
+<?php $this->start('pageTitle') ?>
+    <h1>This is a test</h1>
+<?php $this->end() ?>
+
+<?php $this->start('scripts') ?>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<?php $this->end() ?>
 
     <section class="cta-section theme-bg-light py-5">
         <div class="container text-center single-col-max-width">
@@ -44,4 +52,3 @@
 
         </div>
     </section>
-<?php require_once __DIR__ . '/_footer.php'; ?>

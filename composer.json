@@ -20,5 +20,7 @@
       }
     },
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "league/plates": "9999999-dev"
+    }
 }
