@@ -2,8 +2,11 @@
 
 namespace Core;
 
+use Core\Http\Request;
 use Core\Http\Response;
 use League\Plates\Engine as TemplateEngine;
+use League\Plates\Extension\Asset;
+use League\Plates\Extension\URI;
 
 class BaseController
 {
@@ -13,6 +16,8 @@ class BaseController
     public function __construct()
     {
         $this->templateEngine = new TemplateEngine(__DIR__ . "/../App/Views/");
+        $this->templateEngine->loadExtension(new Asset(__DIR__ . "/../Core/../../public/"));
+        $this->templateEngine->loadExtension(new URI(Request::Get()->getServer()->getString('PATH_INFO')));
     }
 
     public function render($view, $data = [], $code = 200, $headers = []): Response {

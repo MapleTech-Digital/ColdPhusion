@@ -1,6 +1,7 @@
-<?php require_once __DIR__ . '/_header.php'; ?>
+<?php $this->layout('_base', ['page_title' => $post->getTitle()]); ?>
 
 <article class="blog-post px-3 py-5 p-md-5">
+
     <div class="container single-col-max-width">
         <header class="blog-post-header">
             <h2 class="title mb-2"><?php echo $post->getTitle(); ?></h2>
@@ -165,5 +166,3 @@ export  $initHighlight;
     </div><!--//container-->
 </section><!--//promo-section-->
 
-
-<?php require_once __DIR__ . '/_footer.php'; ?>

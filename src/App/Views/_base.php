@@ -15,7 +15,11 @@
     <script defer src="/assets/fontawesome/js/all.min.js"></script>
 
     <!-- Theme CSS -->
-    <link id="theme-style" rel="stylesheet" href="/assets/css/theme-1.css">
+    <?php if ($this->section('styles')): ?>
+        <?=$this->section('styles') ?>
+    <?php else: ?>
+        <link id="theme-style" rel="stylesheet" href="<?=$this->asset('/assets/css/theme-1.css')?>">
+    <?php endif ?>
 
 </head>
 
@@ -66,12 +70,6 @@
 
 <div class="main-wrapper">
 
-    <?php if ($this->section('pageTitle')): ?>
-        <?=$this->section('pageTitle') ?>
-    <?php else: ?>
-        <h1>This is a title</h1>
-    <?php endif ?>
-
     <?=$this->section('content')?>
 
     <footer class="footer text-center py-2 theme-bg-dark">
@@ -90,7 +88,6 @@
     <script src="/assets/plugins/popper.min.js"></script>
     <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <?php endif ?>
-
 
 </body>
 </html>

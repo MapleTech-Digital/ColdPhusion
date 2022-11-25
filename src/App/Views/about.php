@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/_header.php'; ?>
+<?php $this->layout('_base', ['page_title' => 'About Me']); ?>
 
 <article class="about-section py-5">
     <div class="container">
@@ -34,6 +34,3 @@
         </div><!--//single-form-max-width-->
     </div><!--//container-->
 </section>
-
-
-<?php require_once __DIR__ . '/_footer.php'; ?>
