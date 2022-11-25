@@ -2,8 +2,6 @@
 
 namespace Core\Database\DBAL;
 
-require_once __DIR__ . '/../../Config.php';
-
 use Core\Config;
 
 class Database

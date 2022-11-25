@@ -2,8 +2,6 @@
 
 namespace Core;
 
-require_once __DIR__ . '/Parameters.php';
-
 use Core\Parameters;
 
 class Config

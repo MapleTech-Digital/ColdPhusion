@@ -5,9 +5,6 @@ namespace App\Controllers;
 use Core\BaseController;
 use App\Repositories;
 
-require_once __DIR__ . '/../../Core/BaseController.php';
-require_once __DIR__ . '/../Repositories/PostRepository.php';
-
 class HomeController extends BaseController
 {
     public function index()

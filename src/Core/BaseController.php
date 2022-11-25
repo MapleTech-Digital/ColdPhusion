@@ -2,8 +2,6 @@
 
 namespace Core;
 
-require_once __DIR__ . '/Http/Response.php';
-
 use Core\Http\Response;
 
 class BaseController

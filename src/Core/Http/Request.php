@@ -4,8 +4,6 @@ namespace Core\Http;
 
 use Core\Parameters;
 
-require_once __DIR__ . '/../Parameters.php';
-
 class Request
 {
     private static $instance = null;

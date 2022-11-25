@@ -2,3 +2,5 @@
 ./config.php
 *.log
 .env
+
+/vendor/

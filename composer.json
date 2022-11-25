@@ -1,0 +1,24 @@
+{
+    "name": "kharrison/cold-phusion",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Kyle Harrison",
+            "email": "redactedprofile@gmail.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Core\\": "src/Core/",
+        "App\\": "src/App/"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Core\\Tests\\": "src/Core/Tests/",
+        "App\\Tests\\": "src/App/Tests/"
+      }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}

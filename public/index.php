@@ -5,6 +5,8 @@ if($_SERVER['SCRIPT_NAME'] !== '/index.php') {
     return false;
 }
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 require_once __DIR__ . '/../src/bootstrap.php';
 
 $matched_route = Core\Router\Router::Get()->match(Core\Http\Request::Get()->getServer()->getString('PATH_INFO'));

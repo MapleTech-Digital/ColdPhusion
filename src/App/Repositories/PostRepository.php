@@ -5,9 +5,6 @@ namespace App\Repositories;
 use Core\Database\DBAL\Database;
 use App\Models\Post;
 
-require_once __DIR__ . '/../../Core/Database/DBAL/Database.php';
-require_once __DIR__ . '/../Models/Post.php';
-
 class PostRepository
 {
     public static function getPosts()
