@@ -29,7 +29,7 @@ class Parameters
         }
 
         // if already Parameters instance, just return at this point
-        if(get_class($this->data[$element]) === self::class) {
+        if(get_class((object)$this->data[$element]) === self::class) {
             return $this->data[$element];
         }
 

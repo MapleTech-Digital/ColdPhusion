@@ -15,7 +15,7 @@ class Database
         $config = Config::Get()->config->get('database');
         try {
             $pdo = new \PDO("mysql:host={$config->getString('host')};dbname={$config->getString('database')}", $config->getString('username'), $config->getString('password'));
-            $pdo->query("1 = 1");
+            $pdo->query("select 1 = 1");
             $this->connection = $pdo;
         } catch (\PDOException $e) {
             echo "Database Connection Error: " . $e->getMessage();
