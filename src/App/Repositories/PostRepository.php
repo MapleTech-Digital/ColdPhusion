@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Core\Database\DBAL\Database;
 use App\Models\Post;
+use Core\Database\QueryBuilder\QueryBuilder;
 
 class PostRepository
 {
@@ -14,6 +15,23 @@ class PostRepository
         $posts = [];
 
         $query = 'SELECT * FROM posts WHERE published = 1 AND NOW() > date_published ORDER BY date_published DESC';
+        foreach($db->query($query) as $row) {
+            $posts[] = new Post($row);
+        }
+
+        return $posts;
+    }
+
+    public static function getPostsQB()
+    {
+        $db = Database::Get()->getConnection();
+
+        $query = QueryBuilder::Create()
+                ->select()
+                ->from('posts', 'p')
+                ->where('p.published = 1')->andWhere('NOW() > p.date_published')
+                ->orderBy('p.date_published', 'DESC');
+
         foreach($db->query($query) as $row) {
             $posts[] = new Post($row);
         }

@@ -6,11 +6,11 @@ use Core\Config;
 
 class Database
 {
-    private static $instance = null;
+    private static ?Database $instance = null;
 
-    private $connection = null;
+    private ?\PDO $connection = null;
 
-    public function connect()
+    public function connect(): void
     {
         $config = Config::Get()->config->get('database');
         try {
@@ -23,12 +23,12 @@ class Database
         }
     }
 
-    public function getConnection()
+    public function getConnection(): ?\PDO
     {
         return $this->connection;
     }
 
-    public static function Get()
+    public static function Get(): ?Database
     {
         if(self::$instance === null) {
             self::$instance = new self();
