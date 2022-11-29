@@ -42,7 +42,7 @@ class Parameters
     }
 
     public function getString($element, $default = '') {
-        return (string)$this->get($element, FILTER_SANITIZE_STRING, $default);
+        return (string)$this->get($element, FILTER_SANITIZE_FULL_SPECIAL_CHARS, $default);
     }
 
     public function getInt($element, $default = 0)
