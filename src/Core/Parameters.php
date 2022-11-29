@@ -15,6 +15,11 @@ class Parameters
         $this->data = $data;
     }
 
+    public function isEmpty(): bool
+    {
+        return count($this->data) <= 0;
+    }
+
     public function get($element, $filter = null, $default = null) {
         if(!isset($this->data[$element]) || !array_key_exists($element, $this->data) || !$this->data[$element]) {
             return $default;
@@ -65,7 +70,7 @@ class Parameters
         return (bool)$this->get($element, null, '');
     }
 
-    public function getEmail($element, $default)
+    public function getEmail($element, $default = '')
     {
         return (string)$this->get($element, FILTER_SANITIZE_EMAIL, $default);
     }
