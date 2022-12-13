@@ -6,5 +6,11 @@ use Core\Database\QueryBuilder\Interface\ISelect;
 
 class Select implements ISelect
 {
-    public array $reflectors;
+    /** @var array<Reflector>  */
+    private array $reflectors;
+
+    public function setReflectors(array $reflectors): self
+    {
+        $this->reflectors = $reflectors;
+    }
 }
