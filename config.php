@@ -1,5 +1,7 @@
 <?php
 
+\Core\Environment\DotEnv::Initialize(__DIR__ . '/.env');
+
 $config = [
     // Database Module
     "database" => [

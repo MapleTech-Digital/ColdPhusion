@@ -3,6 +3,7 @@
 namespace Core\Database\DBAL;
 
 use Core\Config;
+use Core\DevTools\VarDumper;
 
 class Database
 {

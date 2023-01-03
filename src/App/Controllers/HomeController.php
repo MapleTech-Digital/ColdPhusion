@@ -22,3 +22,4 @@ class HomeController extends BaseController
         return $this->render('about');
     }
 }
+

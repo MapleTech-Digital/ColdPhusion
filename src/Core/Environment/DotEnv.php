@@ -2,6 +2,7 @@
 
 namespace Core\Environment;
 
+use Core\DevTools\VarDumper;
 use Core\Logger\Logger;
 
 class DotEnv
@@ -21,9 +22,17 @@ class DotEnv
 
         $data = explode(PHP_EOL, file_get_contents($path));
         foreach($data as $datum) {
-            [$key, $value] = explode('=', trim($datum));
+            $datum = trim($datum);
+
+            if(!$datum) {
+                continue;
+            }
+
+            [$key, $value] = explode('=', $datum);
             $key = trim($key);
             $value = trim($value);
+
+            putenv("{$key}={$value}");
         }
 
     }
