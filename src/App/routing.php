@@ -2,7 +2,7 @@
 
 $routes = [
     'index' => [
-        'route' => '',
+        'route' => '/',
         'controller' => 'App\Controllers\HomeController::index'
     ],
     'post_view' => [

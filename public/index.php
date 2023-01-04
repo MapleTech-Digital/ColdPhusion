@@ -1,9 +1,12 @@
 <?php
 
 // return whatever asset so long as we're not on this front controller
-if($_SERVER['SCRIPT_NAME'] !== '/index.php') {
-    return false;
-}
+//echo "<pre>";
+//var_dump($_SERVER);
+//die();
+//if($_SERVER['SCRIPT_NAME'] !== '/index.php') {
+//    return false;
+//}
 
 // Include Composer Files
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -11,7 +14,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Include System Files
 require_once __DIR__ . '/../src/bootstrap.php';
 
-$matched_route = Core\Router\Router::Get()->match(Core\Http\Request::Get()->getServer()->getString('PATH_INFO'));
+$matched_route = Core\Router\Router::Get()->match(Core\Http\Request::Get()->getServer()->getString('REQUEST_URI'));
 if(!$matched_route) {
     echo "404 not found";
     die();
