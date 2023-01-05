@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Core\BaseController;
 use App\Repositories;
+use Core\DevTools\VarDumper;
 
 class PostController extends BaseController
 {
@@ -14,6 +15,12 @@ class PostController extends BaseController
         return $this->render('post', [
             'post' => $post
         ]);
+    }
+
+    public function random()
+    {
+        $post = Repositories\PostRepository::getRandomPost();
+        return $this->render('about');
     }
 
 }

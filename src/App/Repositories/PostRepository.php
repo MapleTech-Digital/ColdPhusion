@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Core\Database\DBAL\Database;
 use App\Models\Post;
 use Core\Database\QueryBuilder\QueryBuilder;
+use Core\DevTools\VarDumper;
 
 class PostRepository
 {
@@ -51,6 +52,20 @@ class PostRepository
         $posts = $h->fetchAll();
 
         foreach($posts as $row) {
+            $post = new Post($row);
+        }
+
+        return $post;
+    }
+
+    public static function getRandomPost()
+    {
+        $db = Database::Get()->getConnection();
+
+        $post = [];
+
+        $query = 'SELECT * FROM posts WHERE published = 1 AND NOW() > date_published ORDER BY RAND() LIMIT 1';
+        foreach($db->query($query) as $row) {
             $post = new Post($row);
         }
 

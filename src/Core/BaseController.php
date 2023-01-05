@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\Http\RedirectResponse;
 use Core\Http\Request;
 use Core\Http\Response;
 use League\Plates\Engine as TemplateEngine;
@@ -18,6 +19,11 @@ class BaseController
         $this->templateEngine = new TemplateEngine(__DIR__ . "/../App/Views/");
         $this->templateEngine->loadExtension(new Asset(__DIR__ . "/../Core/../../public/"));
         $this->templateEngine->loadExtension(new URI(Request::Get()->getServer()->getString('PATH_INFO')));
+    }
+
+    public function redirect()
+    {
+        $response = new RedirectResponse();
     }
 
     public function render($view, $data = [], $code = 200, $headers = []): Response {

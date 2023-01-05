@@ -1,5 +1,6 @@
 # ColdPhusion
-A forum platform for the CodeNucleus Community, running on a custom PHP framework
+A batteries included monolithic php framework, with a focus on minimal third party dependency (aiming for none), and sticking to pure PHP language features.
+Speed and Simplicity are achieved by reducing the need for pre/post-processing, caching, reflection, and parsing to effectively none, while maintaining a high level of functionality similar in style to modern frameworks.
 
 # Run it
 
@@ -8,11 +9,10 @@ A forum platform for the CodeNucleus Community, running on a custom PHP framewor
 php -S localhost:8000 -t ./public .\public\index.php
 ```
 
-### Apache
-
-### Nginx
-
 ### Docker
+```
+docker-compose up -d
+```
 
 # Screenshots
 
