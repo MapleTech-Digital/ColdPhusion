@@ -21,25 +21,41 @@ class Router
     {
         $matched_route = null;
         foreach($this->route_table as $route_name => $potential_route) {
+
+            $is_wildcard = false;
+            if(str_contains($potential_route['route'], '*')) {
+                $is_wildcard = true;
+                $potential_route['route'] = rtrim($potential_route['route'], '*');
+            }
+
             // break the route down by forward slash
             $route_chunks = explode('/', $potential_route['route']);
             $path_chunks = explode('/', $path_info);
 
-            if(count($route_chunks) !== count($path_chunks)) {
-                // mismatch on chunk count, don't consider further
+            if(!$is_wildcard && count($route_chunks) !== count($path_chunks)) {
+                // if not a wildcard route and mismatch on chunk count, don't consider further
                 continue;
+            }
+
+            if($is_wildcard) {
+                // if wildcard, combine all path chunks after last route chunk index
+                $combined = implode('/', array_slice($path_chunks, count($route_chunks) - 1, count($path_chunks)));
+                $path_chunks = array_slice($path_chunks, 0, count($route_chunks) - 1);
+                $path_chunks[] = $combined;
             }
 
             $found = false;
             $parameters = [];
             foreach($path_chunks as $index => $pchunk) {
+
                 $rchunk = $route_chunks[$index];
+
                 if($pchunk === $rchunk) {
                     $found = true;
                     continue;
                 }
 
-                if(strpos($rchunk,  ':') === 0) {
+                if(str_starts_with($rchunk, ':')) {
                     $found = true;
                     $parameters[substr($rchunk, 1)] = $pchunk;
                     continue;
