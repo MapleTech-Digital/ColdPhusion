@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\DevTools\VarDumper;
 use Core\Parameters;
 
 class Config

@@ -2,11 +2,14 @@
 
 namespace Core\Router;
 
+use Core\DevTools\VarDumper;
+use Core\Logger\Logger;
+
 class Router
 {
-    public static $instance = null;
+    public static ?Router $instance = null;
 
-    private $route_table = [];
+    private array $route_table = [];
 
     public function __construct()
     {
@@ -14,6 +17,7 @@ class Router
     }
 
     public function load($route_table) {
+        Logger::Debug("Loading Route Table", ["table" => $route_table]);
         $this->route_table = $route_table;
     }
 
@@ -76,8 +80,14 @@ class Router
                 'action' => $matched_controller_chunks[1],
                 'parameters' => $parameters
             ];
+
+            Logger::Debug("Potential matched route", [
+                'url' => $path_info,
+                'match' => $matched_route
+            ]);
         }
 
+        Logger::Info("Matched route", $matched_route);
         return $matched_route;
     }
 

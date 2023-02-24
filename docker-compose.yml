@@ -1,11 +1,22 @@
 version: "3"
 services:
   core_app:
-    container_name: coldphusion
+    container_name: app
+    restart: always
     build:
       context: .
+    env_file:
+      - .env
     ports:
-      - "8000:80"
+      - "8123:80"
     volumes:
       - .:/var/www/html
+    links:
+      - redis_cache
+    network_mode: "bridge"
+
+  redis_cache:
+    image: redis:latest
+    container_name: redis_cache
+    restart: always
     network_mode: "bridge"

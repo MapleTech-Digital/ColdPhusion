@@ -2,9 +2,6 @@
 
 namespace Core\Environment;
 
-use Core\DevTools\VarDumper;
-use Core\Logger\Logger;
-
 class DotEnv
 {
     public function __construct(string $path)
@@ -14,9 +11,9 @@ class DotEnv
     }
     public function init(string $path)
     {
-        $logger = Logger::Get();
         if(!file_exists($path)) {
-            $logger->error(".env file doesn't exist at {$path}");
+            // $logger->error(".env file doesn't exist at {$path}");
+            // .env file doesn't exist, don't do anything, maybe system environment variables are enough
             return;
         }
 

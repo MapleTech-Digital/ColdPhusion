@@ -15,9 +15,20 @@ class Parameters
         $this->data = $data;
     }
 
+
+
+    public function set($key, $value): self {
+        $this->data[$key] = $value;
+        return $this;
+    }
+
     public function isEmpty(): bool
     {
         return count($this->data) <= 0;
+    }
+
+    public function getAll(): array {
+        return $this->data;
     }
 
     public function get($element, $filter = null, $default = null) {
@@ -57,7 +68,7 @@ class Parameters
 
     public function getFloat($element, $default = 0.0)
     {
-        return (float)$this->get($element, FILTER_SANITIZE_NUMBER_FLOAT, $default);
+        return (float)filter_var($this->getString($element, (string)$default), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     }
 
     public function getNested($element)
@@ -67,7 +78,7 @@ class Parameters
 
     public function getBool($element)
     {
-        return (bool)$this->get($element, null, '');
+        return $this->get($element, FILTER_VALIDATE_BOOLEAN);
     }
 
     public function getEmail($element, $default = '')

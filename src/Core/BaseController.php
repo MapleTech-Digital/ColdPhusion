@@ -21,9 +21,13 @@ class BaseController
         $this->templateEngine->loadExtension(new URI(Request::Get()->getServer()->getString('PATH_INFO')));
     }
 
-    public function redirect()
+    public function redirect($target, $code = 301)
     {
         $response = new RedirectResponse();
+        $response->code = $code;
+        $response->target = $target;
+
+        return $response;
     }
 
     public function render($view, $data = [], $code = 200, $headers = []): Response {
