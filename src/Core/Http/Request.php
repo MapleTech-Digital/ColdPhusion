@@ -6,7 +6,7 @@ use Core\Parameters;
 
 class Request
 {
-    private static $instance = null;
+    private static $instance;
 
     public $request = null;
 

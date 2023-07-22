@@ -23,6 +23,11 @@ if(!$matched_route) {
 $controller = new $matched_route['controller']();
 $response = call_user_func_array([$controller, $matched_route['action']], $matched_route['parameters']);
 
+// basic hack for now
+if($response instanceof \Core\Http\RedirectResponse) {
+    header("location: {$response->target}");
+}
+
 ob_start();
 
 echo $response->body;
