@@ -1,114 +1,212 @@
 <?php
+/**
+ * Badge Class
+ * Author: Kyle Harrison <helloky@protonmail.com>
+ */
 
 namespace App\Models;
 
-use Core\Parameters;
+use Core\Database\DBOM\ActiveRecord;
 
-class Post
+class Post extends ActiveRecord
 {
-    public $id = null;
-    public $author_id = null;
-    public $title = null;
-    public $summary = null;
-    public $content = null;
-    public $published = null;
-    public $date_created = null;
-    public $date_updated = null;
-    public $date_published = null;
+    protected static string $table = "posts";
+    protected static string $id_field = "id";
+    protected static array $ignored_fields = ['date_added', 'date_updated'];
 
-    public function __construct($data = null)
+    public ?int $id = null;
+    public ?string $name = null;
+    public ?string $slug = null;
+    public ?string $display = null;
+    public ?string $icon = null;
+    public ?string $link = null;
+    public ?string $description = null;
+    public ?DateTime $date_added = null;
+    public ?DateTime $date_updated = null;
+    public ?int $pro_only = null;
+    public ?int $nonsale = null;
+    public ?int $featured = null;
+    public ?string $creator = null;
+
+
+    public function __construct() { parent::__construct(); }
+
+    public function getDisplay()
     {
-        if($data) {
-            $this->load($data);
+        return $this->display ? $this->display : $this->name;
+    }
+
+    public function getIcon()
+    {
+        global $system;
+        return "{$system['system_uploads']}/{$this->icon}";
+    }
+
+
+    public function getShopInstance()
+    {
+        // if this id exists, try to get the existing badge shop
+        if($this->id)
+        {
+            try
+            {
+                return BadgeShop::Get($this->id);
+            } catch(\Exception $e) {}
         }
-    }
 
-    public function load($data)
-    {
-        $data = new Parameters($data);
+        // failing that create a new one, but dont save here, this is just a shell
+        return BadgeShop::CreateFromArgs([
+            'badge_id' => $this->id,
+            'price' => 0.00,
+            'active' => 0
 
-        $this->id = $data->getString('id');
-        $this->author_id = $data->getInt('author_id');
-        $this->title = $data->getString('title');
-        $this->summary = $data->getString('summary');
-        $this->content = $data->get('content', null, '');
-        $this->published = $data->getInt('published') === 1;
-        $this->date_created = $data->getString('date_created');
-        $this->date_updated = $data->getString('date_updated');
-        $this->date_published = $data->getString('date_published');
+
+        ]);
     }
 
     /**
-     * @return null
+     * Assign a user
      */
-    public function getId()
+    public function promoteUser($userid)
     {
-        return $this->id;
+        // check user isn't already assigned
+        $userBadges = Badge::UserBadges($userid);
+        foreach($userBadges as $ub)
+        {
+            if($ub->getID() == $this->getID())
+            {
+                return null; // Do nothing, already assigned
+            }
+        }
+
+        $sql = vsprintf("INSERT INTO users_badges (user, badge, do_display) VALUES (%s, %s, %s)",
+            [
+                secure($userid, 'int', false),
+                secure($this->getID(), 'int', false),
+                0
+            ]);
+
+        $query = $this->db->query($sql) or _error("SQL_ERROR", $this->db->error);
     }
 
     /**
-     * @return null
+     * Unassign a user
      */
-    public function getAuthorId()
+    public function demoteUser($userid)
     {
-        return $this->author_id;
+        // we can indiscriminately delete, sql wont complain if records werent found
+        $sql = vsprintf("DELETE FROM users_badges WHERE user = %s AND badge = %s",
+            [
+                secure($userid, 'int', false),
+                secure($this->getID(), 'int', false),
+            ]);
+
+        $query = $this->db->query($sql) or _error("SQL_ERROR", $this->db->error);
+    }
+
+
+
+    public function awardUser($userid)
+    {
+        // we can indiscriminately delete, sql wont complain if records werent found
+        $sql = vsprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + 1 WHERE user = %s",
+            [
+                secure($userid, 'int', false),
+            ]);
+
+        $query = $this->db->query($sql) or _error("SQL_ERROR", $this->db->error);
     }
 
     /**
-     * @return null
+     * Changes the display of this badge for a specific user
      */
-    public function getTitle()
+    public function setUserDisplay($userid, $doDisplay)
     {
-        return $this->title;
+        $sql = vsprintf(
+            "UPDATE users_badges SET do_display = %s WHERE user = %s AND badge = %s",
+            [ $doDisplay ? 1 : 0, secure($userid, 'int', false), secure($this->getID(), 'int', false) ]);
+
+        $query = $this->db->query($sql) or _error("SQL_ERROR");
+    }
+
+    /*
+    * Get all users associated with this badge
+    */
+    public function getAssigned($count = false)
+    {
+        // Bounce if this record doens't exist yet
+        if(!$this->getID())
+            return 0;
+
+        $reflectors = "u.*";
+        if($count)
+            $reflectors = "count(*) as total";
+
+        $sql = vsprintf(
+            "select %s 
+            from users_badges ub 
+            left join users u on ub.user = u.user_id 
+            where ub.`badge` = %s",
+            [ $reflectors, $this->getID() ]);
+
+        $query = $this->db->query($sql) or _error("SQL_ERROR");
+
+        if($count)
+        {
+            $row = $query->fetch_assoc();
+            return $row['total'];
+        }
+
+        $items = [];
+        while($row = $query->fetch_assoc())
+        {
+            $items[] = $row;
+        }
+
+        return $items;
     }
 
     /**
-     * @return null
+     * Gets all Badge instances associated with any user id
      */
-    public function getSummary()
+    public static function UserBadges($userid, $onlyShown = false)
     {
-        return $this->summary;
-    }
+        global $db;
+        $items = [];
 
-    /**
-     * @return null
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
+        $conditions = "";
+        $_conditions = ['ub.`user` = %s'];
+        $_values = [secure($userid, 'int', false)];
+        if($onlyShown)
+        {
+            $_conditions[] = 'ub.do_display = %s';
+            $_values[] = secure(1, 'int', false);
+        }
+        if(count($_conditions))
+        {
+            $conditions = " AND " . implode(" AND ", $_conditions);
+        }
 
-    /**
-     * @return null
-     */
-    public function getPublished()
-    {
-        return $this->published;
-    }
+        // This one uses an association table, so the standard List interface wont work here
+        $sql = vsprintf("
+            SELECT
+                b.*, ub.do_display
+            FROM
+                users_badges ub
+                LEFT JOIN badges b ON b.id = ub.badge 
+            WHERE
+                1 = 1
+                {$conditions}", $_values);
 
-    /**
-     * @return null
-     */
-    public function getDateCreated()
-    {
-        return $this->date_created;
-    }
+        $query = $db->query($sql) or _error("SQL_ERROR");
+        while($row = $query->fetch_assoc())
+        {
+            $badge = Badge::CreateFromArgs($row);
+            $badge->extras['do_display'] = $row['do_display'];
+            $items[] = $badge;
+        }
 
-    /**
-     * @return null
-     */
-    public function getDateUpdated()
-    {
-        return $this->date_updated;
+        return $items;
     }
-
-    /**
-     * @return null
-     */
-    public function getDatePublished()
-    {
-        return $this->date_published;
-    }
-
 
 }

@@ -9,7 +9,7 @@ $config = [
         "port" => getenv("DB_PORT") ?: 3306,
         "database" => getenv("DB_NAME") ?: "phlog",
         "username" => getenv("DB_USER") ?: "root",
-        "password" => getenv("DB_PASS") ?: "toor"
+        "password" => getenv("DB_PASS") ?: ""
     ],
 
     "redis" => [

@@ -21,9 +21,9 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "php": "^8.1",
+    "php": "^8.0",
     "ext-pdo": "*",
     "ext-redis": "*",
-    "league/plates": "9999999-dev"
+    "league/plates": "^3.5"
   }
 }

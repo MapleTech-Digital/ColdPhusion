@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb70517ad2f99237918786531c1a60e6",
+    "content-hash": "f7b8c0a03cc9dafa176b1e0f7b3fe2d3",
     "packages": [
         {
             "name": "league/plates",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/plates.git",
-                "reference": "94122edf80d42b735b2944b96ccd6bec43b8bc2b"
+                "reference": "ec07462f53d38dd4a3323e288c41bffe86e9098e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/plates/zipball/94122edf80d42b735b2944b96ccd6bec43b8bc2b",
-                "reference": "94122edf80d42b735b2944b96ccd6bec43b8bc2b",
+                "url": "https://api.github.com/repos/thephpleague/plates/zipball/ec07462f53d38dd4a3323e288c41bffe86e9098e",
+                "reference": "ec07462f53d38dd4a3323e288c41bffe86e9098e",
                 "shasum": ""
             },
             "require": {
@@ -69,18 +69,20 @@
                 "issues": "https://github.com/thephpleague/plates/issues",
                 "source": "https://github.com/thephpleague/plates/tree/v3"
             },
-            "time": "2022-09-23T18:59:53+00:00"
+            "time": "2023-01-19T12:24:09+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "league/plates": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.1",
+        "ext-pdo": "*",
+        "ext-redis": "*"
+    },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }
