@@ -1,4 +1,4 @@
-# ColdPhusion
+# Photon Framework
 A batteries included monolithic php framework, with a focus on minimal third party dependency (aiming for none), and sticking to pure PHP language features.
 Speed and Simplicity are achieved by reducing the need for pre/post-processing, caching, reflection, and parsing to effectively none, while maintaining a high level of functionality similar in style to modern frameworks.
 
